@@ -44,20 +44,20 @@ public class AuthorRepositoryIntegrationTests {
         assertThat(result.get()).isEqualTo(author); // Check that the author is the same as the one created
     }
 
-//    @Test
-//    public void testThatMultipleAuthorsCanBeCreatedAndRecalled() {
-//        Author authorA = TestDataUtil.createTestAuthorA();
-//        underTest.create(authorA); // Create the author in the database
-//        Author authorB = TestDataUtil.createTestAuthorB();
-//        underTest.create(authorB);
-//        Author authorC = TestDataUtil.createTestAuthorC();
-//        underTest.create(authorC);
-//
-//        List<Author> result = underTest.find();
-//        // Check that there are 3 authors in the database, and that they are the same as the ones created
-//        assertThat(result).hasSize(3).containsExactly(authorA, authorB, authorC);
-//    }
-//
+    @Test
+    public void testThatMultipleAuthorsCanBeCreatedAndRecalled() {
+        Author authorA = TestDataUtil.createTestAuthorA();
+        underTest.save(authorA); // Create the author in the database
+        Author authorB = TestDataUtil.createTestAuthorB();
+        underTest.save(authorB);
+        Author authorC = TestDataUtil.createTestAuthorC();
+        underTest.save(authorC);
+
+        Iterable<Author> result = underTest.findAll();
+        // Check that there are 3 authors in the database, and that they are the same as the ones created
+        assertThat(result).hasSize(3).containsExactly(authorA, authorB, authorC);
+    }
+
 //    @Test
 //    public void testThatAuthorCanBeUpdated() {
 //        Author authorA = TestDataUtil.createTestAuthorA();
