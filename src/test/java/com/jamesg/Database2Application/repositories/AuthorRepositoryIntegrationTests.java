@@ -58,24 +58,24 @@ public class AuthorRepositoryIntegrationTests {
         assertThat(result).hasSize(3).containsExactly(authorA, authorB, authorC);
     }
 
-//    @Test
-//    public void testThatAuthorCanBeUpdated() {
-//        Author authorA = TestDataUtil.createTestAuthorA();
-//        underTest.create(authorA); // Create the author in the database
-//        authorA.setName("UPDATED");
-//        underTest.update(authorA.getId(), authorA);
-//        Optional<Author> result = underTest.findOne(authorA.getId());
-//        assertThat(result).isPresent(); // Check that the author is present
-//        assertThat(result.get()).isEqualTo(authorA);
-//
-//    }
-//
-//    @Test
-//    public void testThatAuthorCanBeDeleted() {
-//        Author authorA = TestDataUtil.createTestAuthorA();
-//        underTest.create(authorA);
-//        underTest.delete(authorA.getId());
-//        Optional<Author> result = underTest.findOne(authorA.getId());
-//        assertThat(result).isEmpty(); // Check that the author is not present
-//    }
+    @Test
+    public void testThatAuthorCanBeUpdated() {
+        Author authorA = TestDataUtil.createTestAuthorA();
+        underTest.save(authorA); // Create the author in the database
+        authorA.setName("UPDATED");
+        underTest.save(authorA); // save is used for both create and update
+        Optional<Author> result = underTest.findById(authorA.getId());
+        assertThat(result).isPresent(); // Check that the author is present
+        assertThat(result.get()).isEqualTo(authorA); // checking if result is the same as updated author name
+
+    }
+
+    @Test
+    public void testThatAuthorCanBeDeleted() {
+        Author authorA = TestDataUtil.createTestAuthorA();
+        underTest.save(authorA);
+        underTest.deleteById(authorA.getId());
+        Optional<Author> result = underTest.findById(authorA.getId());
+        assertThat(result).isEmpty(); // Check that the author is not present
+    }
 }
