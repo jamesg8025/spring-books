@@ -1,4 +1,4 @@
-package com.jamesg.Database2Application.domain;
+package com.jamesg.Database2Application.domain.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @Entity
 @Table(name = "books")
-public class Book {
+public class BookEntity {
 
     @Id // No auto-generated ID for books, as they are identified by their ISBN
     private String isbn;
@@ -21,6 +21,6 @@ public class Book {
 
     @ManyToOne(cascade = CascadeType.ALL) // Establishes a many-to-one relationship with Author
     @JoinColumn(name = "author_id")
-    private Author author; // Changed to Author object instead of authorId to establish a relationship
+    private AuthorEntity authorEntity; // Changed to Author object instead of authorId to establish a relationship
 
 }
