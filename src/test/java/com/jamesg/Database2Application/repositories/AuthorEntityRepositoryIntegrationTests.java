@@ -34,7 +34,7 @@ public class AuthorEntityRepositoryIntegrationTests {
     @Test
     public void testThatAuthorCanBeCreatedAndRecalled() {
         // Reuse the AuthorDaoImpl class from the unit tests
-        AuthorEntity authorEntity = TestDataUtil.createTestAuthorA();
+        AuthorEntity authorEntity = TestDataUtil.createTestAuthorEntityA();
         underTest.save(authorEntity); // Create the author in the database
         Optional<AuthorEntity> result = underTest.findById(authorEntity.getId());
         assertThat(result).isPresent(); // Check that the author is present
@@ -45,7 +45,7 @@ public class AuthorEntityRepositoryIntegrationTests {
 
     @Test
     public void testThatMultipleAuthorsCanBeCreatedAndRecalled() {
-        AuthorEntity authorEntityA = TestDataUtil.createTestAuthorA();
+        AuthorEntity authorEntityA = TestDataUtil.createTestAuthorEntityA();
         underTest.save(authorEntityA); // Create the author in the database
         AuthorEntity authorEntityB = TestDataUtil.createTestAuthorB();
         underTest.save(authorEntityB);
@@ -59,7 +59,7 @@ public class AuthorEntityRepositoryIntegrationTests {
 
     @Test
     public void testThatAuthorCanBeUpdated() {
-        AuthorEntity authorEntityA = TestDataUtil.createTestAuthorA();
+        AuthorEntity authorEntityA = TestDataUtil.createTestAuthorEntityA();
         underTest.save(authorEntityA); // Create the author in the database
         authorEntityA.setName("UPDATED");
         underTest.save(authorEntityA); // save is used for both create and update
@@ -71,7 +71,7 @@ public class AuthorEntityRepositoryIntegrationTests {
 
     @Test
     public void testThatAuthorCanBeDeleted() {
-        AuthorEntity authorEntityA = TestDataUtil.createTestAuthorA();
+        AuthorEntity authorEntityA = TestDataUtil.createTestAuthorEntityA();
         underTest.save(authorEntityA);
         underTest.deleteById(authorEntityA.getId());
         Optional<AuthorEntity> result = underTest.findById(authorEntityA.getId());
@@ -81,7 +81,7 @@ public class AuthorEntityRepositoryIntegrationTests {
     // This tests shows that the custom query method works based on the method name
     @Test
     public void testThatGetAuthorsWithAgeLessThan() {
-        AuthorEntity testAuthorEntityA = TestDataUtil.createTestAuthorA();
+        AuthorEntity testAuthorEntityA = TestDataUtil.createTestAuthorEntityA();
         underTest.save(testAuthorEntityA);
         AuthorEntity testAuthorEntityB = TestDataUtil.createTestAuthorB();
         underTest.save(testAuthorEntityB);
@@ -95,7 +95,7 @@ public class AuthorEntityRepositoryIntegrationTests {
     // This method name is not a name that Spring Data JPA understands, so a custom query is needed (HQL)
     @Test
     public void testThatGetAuthorsWithAgeGreaterThan() {
-        AuthorEntity testAuthorEntityA = TestDataUtil.createTestAuthorA();
+        AuthorEntity testAuthorEntityA = TestDataUtil.createTestAuthorEntityA();
         underTest.save(testAuthorEntityA);
         AuthorEntity testAuthorEntityB = TestDataUtil.createTestAuthorB();
         underTest.save(testAuthorEntityB);
