@@ -26,15 +26,24 @@ public class BookController {
     }
 
     @PutMapping("/books/{isbn}")
-    public ResponseEntity<BookDto> createBook(
+    public ResponseEntity<BookDto> createUpdateBook(
             @PathVariable("isbn") String isbn,
             @RequestBody BookDto bookDto) {
-
         // Map Dto to Entity to be able to use it in the service layer
         BookEntity bookEntity = bookMapper.mapFrom(bookDto);
-        BookEntity savedBookEntity = bookService.createBook(isbn, bookEntity);// pass in the isbn from the path and the book entity that was converted from the dto in the request body
+        // Check if the book already exists in database.
+        boolean bookExists = bookService.isExists(isbn);
+        // Pass in the isbn from the path and the book entity that was converted from the dto in the request body
+        BookEntity savedBookEntity = bookService.createUpdateBook(isbn, bookEntity);
         BookDto savedBookDto = bookMapper.mapTo(savedBookEntity);
-        return new ResponseEntity<>(savedBookDto, HttpStatus.CREATED);
+        if(bookExists) {
+            // update
+            return new ResponseEntity<>(savedBookDto, HttpStatus.OK);
+        } else {
+            // create
+            return new ResponseEntity<>(savedBookDto, HttpStatus.CREATED);
+        }
+
     }
 
     @GetMapping(path = "/books")
@@ -53,5 +62,7 @@ public class BookController {
             return new ResponseEntity<>(bookDto, HttpStatus.OK);
         }).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
+
+    
 
 }
