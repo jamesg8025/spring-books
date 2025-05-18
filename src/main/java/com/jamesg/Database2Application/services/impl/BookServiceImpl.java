@@ -5,6 +5,10 @@ import com.jamesg.Database2Application.repositories.BookRepository;
 import com.jamesg.Database2Application.services.BookService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
 @Service // Denotes this class as a bean
 public class BookServiceImpl implements BookService {
 
@@ -21,5 +25,14 @@ public class BookServiceImpl implements BookService {
         book.setIsbn(isbn);
 
         return bookRepository.save(book); // Save the book entity to the database
+    }
+
+    @Override
+    public List<BookEntity> findAll() {
+        return StreamSupport
+                .stream(
+                        bookRepository.findAll().spliterator(),
+                false)
+                .collect(Collectors.toList());
     }
 }
