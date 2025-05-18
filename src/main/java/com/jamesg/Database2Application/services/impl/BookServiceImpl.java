@@ -6,6 +6,7 @@ import com.jamesg.Database2Application.services.BookService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -34,5 +35,10 @@ public class BookServiceImpl implements BookService {
                         bookRepository.findAll().spliterator(),
                 false)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Optional<BookEntity> findOne(String isbn) {
+        return bookRepository.findById(isbn); // Find a book by its ISBN
     }
 }
