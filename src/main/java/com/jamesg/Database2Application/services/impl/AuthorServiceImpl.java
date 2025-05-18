@@ -19,8 +19,9 @@ public class AuthorServiceImpl implements AuthorService {
         this.authorRepository = authorRepository;
     }
 
+    // simply saves the author entity to the database
     @Override
-    public AuthorEntity createAuthor(AuthorEntity authorEntity) {
+    public AuthorEntity save(AuthorEntity authorEntity) {
        return authorRepository.save(authorEntity); // returns an author entity because that's JPA's default return type
     }
 
@@ -36,5 +37,10 @@ public class AuthorServiceImpl implements AuthorService {
     @Override
     public Optional<AuthorEntity> findOne(Long id) {
         return authorRepository.findById(id); // simply a pass-through to the repository
+    }
+
+    @Override
+    public boolean isExists(Long id) {
+        return authorRepository.existsById(id);
     }
 }
