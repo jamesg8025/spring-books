@@ -6,12 +6,10 @@ import com.jamesg.Database2Application.mappers.Mapper;
 import com.jamesg.Database2Application.services.AuthorService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -47,5 +45,16 @@ public class AuthorController {
         return authors.stream()
                 .map(authorMapper::mapTo)
                 .collect(Collectors.toList()); // Returns EVERY author in the database
+    }
+
+    @GetMapping(path = "/authors/{id}") // whatever is in {id} will be passed to the method as a parameter
+    public ResponseEntity<AuthorDto> getAuthor(@PathVariable("id") Long id) {
+        // In the case that an author exists, we get an optional with val of the author. if not, we get an empty optional
+        Optional<AuthorEntity> foundAuthor = authorService.findOne(id);
+        return foundAuthor.map(authorEntity ->
+        {
+            AuthorDto authorDto = authorMapper.mapTo(authorEntity);
+            return new ResponseEntity<>(authorDto, HttpStatus.OK);
+        }).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 }
