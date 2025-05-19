@@ -53,6 +53,10 @@ public class AuthorServiceImpl implements AuthorService {
             Optional.ofNullable(authorEntity.getAge()).ifPresent(existingAuthor::setAge); // if we find that the author entity, as provided, has an age and not null, then set the age of the existing author to the age of the author entity
             return authorRepository.save(existingAuthor);
         }).orElseThrow(() -> new RuntimeException("Author does not exist"));
+    }
 
+    @Override
+    public void delete(Long id) {
+        authorRepository.deleteById(id); // deletes object by id
     }
 }
