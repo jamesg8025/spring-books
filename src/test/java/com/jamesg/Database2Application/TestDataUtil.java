@@ -55,7 +55,7 @@ public final class TestDataUtil {
         return BookDto.builder()
                 .isbn("978-1-2345-6789-0")
                 .title("The Shadow in the Attic")
-                .authorEntity(authorEntity)
+                .author(authorEntity)
                 .build();
     }
 

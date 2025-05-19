@@ -1,6 +1,5 @@
 package com.jamesg.Database2Application.domain.dto;
 
-import com.jamesg.Database2Application.domain.entities.AuthorEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,5 +15,5 @@ public class BookDto {
 
     private String title;
 
-    private AuthorDto authorEntity; // Changed to Author object instead of authorId to establish a relationship
+    private AuthorDto author; // Changed to Author object instead of authorId to establish a relationship
 }
